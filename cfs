@@ -1,0 +1,47 @@
+#!/bin/sh
+#This file is for copy file structure to another folder
+
+
+check_param(){
+    [ "$#" != '3' ] && echo -e "\e[31m The param count is not correct!\e[0m" &&  exit 1
+    [ ! -d "$1" ] && echo -e "\e[31m The Search Path is not exist! \e[0m" && exit 1
+    SEARCH_PATH="$1"
+    SEARCH_FILE="$2"
+    DEST_PATH="$3"
+}
+
+search_files(){
+    local flist=$(find "$SEARCH_PATH" -name "$SEARCH_FILE")
+
+    echo "$flist"
+}
+
+
+copy_fs(){
+    local f=''
+    local rf=''
+    local dp=''
+
+
+    for f in "$1"; do
+        rf=prune_prefix "$f"
+        echo $rf
+        #dp=${DEST_PATH}${$(dirname $rf)}
+
+        #echo $dp
+        #echo "source file: $f"
+    done
+
+
+}
+
+prune_prefix(){
+    local fpath="$1"
+
+    echo "$fpath" | sed 's:'^"$SEARCH_PATH"'::g'
+}
+##============main=================
+
+check_param "$@"
+filelist=$(search_files)
+copy_fs "$filelist"
