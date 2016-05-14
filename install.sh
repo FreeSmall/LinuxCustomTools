@@ -49,5 +49,6 @@ add_path() {
 lct_sync
 add_path
 
+pwd
 rm -- $0 ## delete itself
 echo "the param0=$0"
