@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/rm
 # This is a install shell for automatic download and set env
 # FreeSmall Added
 # 2016-5-14
