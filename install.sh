@@ -50,3 +50,4 @@ lct_sync
 add_path
 
 rm -- $0 ## delete itself
+echo "the param0=$0"
