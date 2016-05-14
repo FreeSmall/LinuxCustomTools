@@ -7,7 +7,7 @@ app_name='LinuxCustomTools'
 [ -z $LCT_PATH ] && LCT_PATH="$HOME/.lcts"
 [ -z $LCT_URL ] && LCT_URL='https://github.com/FreeSmall/LinuxCustomTools.git'
 [ -z $LCT_BRANCH ] && LCT_BRANCH='master'
-[ -z $SCRIPT_PATH ] && SCRIPT_PATH=$(pwd)/$0
+[ -z $SCRIPT_PATH ] && SCRIPT_PATH=$0
 
 msg() {
     printf '%b\n' "$1" >&2 ## %b is for escape characters
