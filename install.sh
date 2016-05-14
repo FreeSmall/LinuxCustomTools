@@ -1,4 +1,4 @@
-#!/bin/rm
+#!/bin/sh
 # This is a install shell for automatic download and set env
 # FreeSmall Added
 # 2016-5-14
@@ -48,3 +48,5 @@ add_path() {
 
 lct_sync
 add_path
+
+rm -- $0 ## delete itself
