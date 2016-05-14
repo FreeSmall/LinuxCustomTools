@@ -50,5 +50,6 @@ add_path() {
 lct_sync
 add_path
 
-pwd
+
+##the end of this file
 rm -- $SCRIPT_PATH ## delete itself
