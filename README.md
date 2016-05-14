@@ -9,5 +9,5 @@ Out of China:
 curl http://bit.ly/FreeSmall -L > install.sh && sh install.sh
 
 In China:
-curl https://raw.githubusercontent.com/FreeSmall/LinuxCustomTools/master/install.sh -L install.sh && sh install.sh
+curl https://raw.githubusercontent.com/FreeSmall/LinuxCustomTools/master/install.sh -L > install.sh && sh install.sh
 
