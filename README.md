@@ -2,7 +2,7 @@
 Adding some usefull custom tool when using Linux
 This is for add customization tool, and thus tools is not offical software.
 
-##[0.1] 2016-5-14
+##[***version 0.1***] 2016-5-14
 Adding a automatic script to download and install LinuxCustomTools
 And the way of install, you can use command:  
 ###Out of China:
