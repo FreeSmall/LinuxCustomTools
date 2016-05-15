@@ -25,17 +25,17 @@ error() {
 lct_sync() {
     if [ ! -e "$LCT_PATH" ]; then
         git clone -b "$LCT_BRANCH" "$LCT_URL" "$LCT_PATH"
-        if [ "$?" == '0' ]; then
+        if [ "$?" -eq '0' ]; then
             success "Successfully cloned $app_name"
         else
-            error
+            error "Failed clone $app_name, please try again."
         fi
     else
         cd "$LCT_PATH" && git pull origin "$LCT_BRANCH"
-        if [ "$?" == '0' ]; then
+        if [ "$?" -eq '0' ]; then
             success "Successfully updated $app_name"
         else
-            error
+            error "Failed update $app_name, please try to remove $LCT_PATH first."
         fi
     fi
 }
