@@ -2,12 +2,30 @@
 #This file is for copy file structure to another folder
 
 
+usage(){
+  echo -e "This is a copy command, but it\'s not different whith \"cp\". \n\rThis command can copy specified file throught its \e[32mfolder structure\e[0m.\n\
+The \e[32mparam1\e[0m is source folder that you will search.\n\
+The \e[32mparam2\e[0m is the file that you will to copy.\n\
+The \e[32mparam3\e[0m is the destnation folder you want to copy to, The default is folder the command executed\n\
+And its usage like below:\n\
+cfs source_folder will_copy_file \[dest_dir\] the defult dest_dir is current folder.\n\
+\b\b eg:\n\
+\b\b\b\b \e[7;37;40mcfs ../prj/newprj/vender/ nowfolder\e[0m\n"
+  exit 1
+}
 check_param(){
-    [ "$#" != '3' ] && echo -e "\e[31m The param count is not correct!\e[0m" &&  exit 1
-    [ ! -d "$1" ] && echo -e "\e[31m The Search Path is not exist! \e[0m" && exit 1
+    [ "$#" -lt '2' ] && echo -e "\e[31m The param count is not correct!\e[0m" && usage
+    [ ! -d "$1" ] && echo -e "\e[31m The Search Path is not exist! \e[0m" && usage
     SEARCH_PATH="$1"
     SEARCH_FILE="$2"
-    DEST_PATH="$3"
+
+    if [ "$#" -eq '3' ]; then
+        DEST_PATH="$3"
+        [ ${DEST_PATH:((${#DEST_PATH} - 1))} != "/" ] && DEST_PATH="$3/"
+    else
+        DEST_PATH="$(basename "$1")/"
+    fi
+
 }
 
 search_files(){
@@ -19,17 +37,19 @@ search_files(){
 
 copy_fs(){
     local f=''
-    local rf=''
     local dp=''
 
 
-    for f in "$1"; do
-        rf=prune_prefix "$f"
-        echo $rf
-        #dp=${DEST_PATH}${$(dirname $rf)}
+    for f in $1; do
+        dp=${DEST_PATH}$(prune_prefix "$(dirname $f)")
 
-        #echo $dp
-        #echo "source file: $f"
+        [ ! -d "$dp" ] && mkdir -p $dp
+        cp -f $f $dp/$(basename "$f") 2>/dev/null
+        if [ "$?" -eq '0' ]; then
+          echo -e "\e[32m Copy\e[0m $f \e[32m to \e[0m"$dp/$(basename "$f")
+        else
+          echo -e "\e[31m Failed to copy \e[0m $f "
+        fi
     done
 
 
