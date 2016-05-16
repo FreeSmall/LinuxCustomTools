@@ -10,3 +10,5 @@ This is for add customization tool, and thus tools is not offical software.
 ```bash
    curl http://freesmall.org/FreeSmall_LCTs -L > install.sh && sh install.sh
 ```
+## [***version 0.2***] 2016-5-16
+* Add a command cfs
