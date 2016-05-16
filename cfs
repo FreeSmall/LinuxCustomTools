@@ -10,7 +10,7 @@ The \e[32mparam3\e[0m is the destnation folder you want to copy to, The default 
 And its usage like below:\n\
 cfs source_folder will_copy_file \[dest_dir\] the defult dest_dir is current folder.\n\
 \b\b eg:\n\
-\b\b\b\b \e[7;37;40mcfs ../prj/newprj/vender/ nowfolder\e[0m\n"
+\b\b\b\b \e[7;37;40mcfs ../prj/newprj/vender/ Androi.mk nowfolder\e[0m\n"
   exit 1
 }
 check_param(){

@@ -6,7 +6,7 @@ function getmode {
  [ "$#" -ne 1 ] && echo "param must be only one" && exit 1
  [ ! -e "$1" ] && echo "the file is not exist!" && exit 1
 
- result=$(ls -ld $1 | gawk '{print $1}')
+ result=$(ls -ld $1 | awk '{print $1}')
  mode=${result:1}
  owner=${mode:0:3}
  group=${mode:3:3}
