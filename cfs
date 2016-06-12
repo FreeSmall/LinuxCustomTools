@@ -19,6 +19,7 @@ check_param(){
     SEARCH_PATH="$1"
     SEARCH_FILE="$2"
 
+    [ ${SEARCH_PATH:((${#SEARCH_PATH} -1))} != "/" ] && SEARCH_PATH="$1/"
     if [ "$#" -eq '3' ]; then
         DEST_PATH="$3"
         [ ${DEST_PATH:((${#DEST_PATH} - 1))} != "/" ] && DEST_PATH="$3/"
@@ -41,12 +42,12 @@ copy_fs(){
 
 
     for f in $1; do
-        dp=${DEST_PATH}$(prune_prefix "$(dirname $f)")
+        dp=${DEST_PATH}$(prune_prefix "$(dirname $f)/")
 
         [ ! -d "$dp" ] && mkdir -p $dp
-        cp -f $f $dp/$(basename "$f") 2>/dev/null
+        cp -f $f $dp$(basename "$f") 2>/dev/null
         if [ "$?" -eq '0' ]; then
-          echo -e "\e[32m Copy\e[0m $f \e[32m to \e[0m"$dp/$(basename "$f")
+          echo -e "\e[32m Copy\e[0m $f \e[32m to \e[0m"$dp$(basename "$f")
         else
           echo -e "\e[31m Failed to copy \e[0m $f "
         fi
