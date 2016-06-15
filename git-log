@@ -1,0 +1,11 @@
+#/bin/sh
+
+help(){
+   echo "--stat: show file change list"
+   exit 0
+}
+if [ $# -eq 1 ] && [ $1 == '--help' ];then
+    help
+fi
+
+git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(cyan)(%cn%Creset,%C(cyan)%ce)%Creset %Cgreen(%cd)%Creset' --abbrev-commit --date=iso $@
