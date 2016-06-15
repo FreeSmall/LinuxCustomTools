@@ -32,7 +32,7 @@ check_param(){
 }
 
 search_files(){
-    local flist=$(find "$SEARCH_PATH" -name "$SEARCH_FILE")
+    local flist=$(find "$SEARCH_PATH" -name "$SEARCH_FILE" | sort)
 
     echo "$flist"
 }
@@ -49,22 +49,28 @@ copy_fs(){
 
         [ ! -d "$dp" ] && mkdir -p $dp
         cp -f $f $dp$(basename "$f") 2>/dev/null
+
         if [ "$?" -eq '0' ]; then
-          #echo before: $(pwd)
+
           pushd $dp
-          #echo after: $(pwd)
+
           result=$(gitpatch $dp$(basename "$f"))
           popd
+
           if [ $result -eq 0 ]; then
-            rm -rf $f $dp$(basename $f)
-            echo -e "\e[32m Apply patch:\e[0m $(basename $f) Success!"
+              rm -rf $f $dp$(basename $f)
+              echo -e "\e[32m Apply patch:\e[0m $(basename $f) Success!"
+          else
+              echo -e "\e[31m Failed to apply patch \e[0m $(basename $f): "
           fi
         else
-          echo -e "\e[31m Failed to apply patch \e[0m $(basename $f):\n "
-          cat $dp"error.log"
-          exit 1
+              echo -e "\e[31m Failed to apply patch \e[0m $dp$(basename $f) : "
+              exit 1
         fi
+
+        [  -s $dp"error.log" ] && cat $dp"error.log"
         rm -rf $dp"error.log"
+
     done
 
 
