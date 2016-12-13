@@ -1,12 +1,50 @@
-#/bin/sh
+#/bin/env git
+#set -x
 
 help(){
    echo "--stat:                     show file change list"
    echo "--author= someone:          filter specified people log"
    exit 0
 }
-if [ $# -eq 1 ] && [ $1 == '--help' ];then
-    help
-fi
 
-git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(cyan)(%cn%Creset,%C(cyan)%ce)%Creset %Cgreen(%cd)%Creset' --abbrev-commit --date=iso $@
+#graph_fmt=--pretty=format:%Cred%h%Creset -%C\(yellow\)%d%Creset %s %C\(cyan\)\(%cn%Creset,%C\(cyan\)%ce\)%Creset %Cgreen\(%cd\)%Creset
+#echo pzy:$graph_fmt
+
+#git log --graph  $graph_fmt --abbrev-commit --date=iso $@
+
+fmt='%Cred%h%Creset-%C(yellow)%d%Creset%s%C(cyan)(%C(cyan)%cn)%Creset%Cgreen(%cd)%Creset'
+rev=
+
+graphfmt='--graph --all  --pretty=format:${fmt} --abbrev-commit --date=local'
+filesfmt='-m -n1 --name-only --pretty=format: $rev| grep -v ^$'
+
+getargs(){
+
+for parm in $* ; do
+  start=$(expr match "$parm" '-\|--')
+  option=${parm:$start}
+
+  if [[ $start -gt 0 ]]; then
+    if [ "$option" == "f" ] || [ "$options" == "files" ]; then
+      append=$filesfmt
+    elif [ "$option" == "g" ] || [ "$options" == "graph" ]; then
+      append=$graphfmt
+    else
+      help
+    fi
+  else
+    append=$append" "$parm
+  fi
+
+done
+
+}
+
+
+
+##########################################################
+#            this is main started possition.             #
+##########################################################
+getargs $*
+
+eval git log $append
