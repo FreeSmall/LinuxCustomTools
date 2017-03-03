@@ -1,0 +1,67 @@
+#!/bin/sh
+#This file is for copy file structure to another folder
+
+
+usage(){
+  echo -e "This is a copy command, but it\'s not different whith \"cp\". \n\rThis command can copy specified file throught its \e[32mfolder structure\e[0m.\n\
+The \e[32mparam1\e[0m is source folder that you will search.\n\
+The \e[32mparam2\e[0m all patchs that  will to copy, it's a const value.\n\
+The \e[32mparam3\e[0m is the destnation folder you want to copy to, The default is folder the command executed\n\
+And its usage like below:\n\
+cfs source_folder will_copy_file [dest_dir] the defult dest_dir is current folder.\n\
+\b\b eg:\n\
+\b\b\b\b \e[7;37;40mcfs ../prj/newprj/vender/ Androi.mk nowfolder\e[0m\n"
+  exit 1
+}
+check_param(){
+    [ ! -d "$1" ] && echo -e "\e[31m The Search Path is not exist! \e[0m" && usage
+    SEARCH_PATH="$1"
+
+    [ ${SEARCH_PATH:((${#SEARCH_PATH} -1))} != "/" ] && SEARCH_PATH="$1/"
+}
+
+search_files(){
+    local SEARCH_FILE=.git
+    local flist=$(find "$SEARCH_PATH" -name "$SEARCH_FILE" | sort)
+
+    echo "$flist"
+}
+
+
+copy_fs(){
+
+    for f in $1; do
+        prj=${f%/*}
+        cd $prj
+        git format-patch -M origin/master
+        cd -
+    done
+}
+
+prune_prefix(){
+    local fpath="$1"
+
+    echo "$fpath" | sed 's:'^"$SEARCH_PATH"'::g'
+}
+
+gitpatch(){
+    local patchfile=$(basename $1)
+
+#    echo "========patch $patchfile start=============="
+#    git apply --stat  $patchfile
+    #git apply --check $patchfile 2> error.log
+#    echo "========patch $patchfile  end=============="
+
+    if [ -s "error.log" ]; then
+        echo 1
+    else
+        #git am -s < $patchfile &>/dev/null
+        git format -M origin/master
+        echo 0
+    fi
+}
+##============main=================
+
+check_param "$@"
+filelist=$(search_files)
+copy_fs "$filelist"
