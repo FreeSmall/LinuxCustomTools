@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Author: zhaoyang.peng@gmail.com
+# Purpose:This script is for fast delete a mass of files for project
+# date: 2017-06-22
+
+if [ $# != 1 ]; then
+    echo -e "Please input \033[33m PROJECT PATH\033[0m that you need delete!"
+    exit 1;
+fi
+
+if [ ! -d $1 ]; then
+    echo -e "The Project is \033[41mNOT\033[0m a Folder!"
+    exit 1;
+fi
+
+eptdir=.EMPTYDIR
+mkdir $eptdir
+time rsync -a --delete-before --progress $eptdir/ $1/
+rm -rf $eptdir
