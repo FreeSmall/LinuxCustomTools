@@ -8,7 +8,7 @@ This is for add customization tool, and thus tools is not offical software.
 * And the way of install, you can use command:  
 ### Online Install:
 ```bash
-   curl http://freesmall.org/FreeSmall_LCTs -L > install.sh && sh install.sh
+   curl http://freesmall.org/FreeSmall_LCTs -L -o - | sh
 ```
 ## [***version 0.2***] 2016-5-16
 * Add a command cfs
