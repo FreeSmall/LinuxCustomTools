@@ -41,7 +41,9 @@ lct_sync() {
 }
 
 add_path() {
-    sed -i '/\$HOME\/\.lcts/d' $HOME/.bashrc
+    if [ -f $HOME/.bashrc ]; then
+        sed -i '/\$HOME\/\.lcts/d' $HOME/.bashrc
+    fi
     echo "export PATH=\$PATH:\$HOME/.lcts" >> "$HOME/.bashrc"
     . $HOME/.bashrc
 }
